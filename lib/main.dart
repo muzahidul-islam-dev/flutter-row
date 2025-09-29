@@ -1,66 +1,92 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-void main() {
+void main(){
   runApp(const MyApplication());
 }
 
-class MyApplication extends StatelessWidget {
+
+class MyApplication extends StatelessWidget{
   const MyApplication({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return MaterialApp(
       home: HomeActivity(),
-      title: 'Rahat Hossain',
       debugShowCheckedModeBanner: false,
-    );
+      );
   }
 }
 
-class HomeActivity extends StatelessWidget {
+class HomeActivity extends StatelessWidget{
   const HomeActivity({super.key});
-  myCustomButton(message, context) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+
+  myCustomMessage(message, context){
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message))
+    );
+  }
+
+
+  customAlertDialog(context){
+    return showDialog(context: context, builder: (BuildContext context){
+      return Expanded(child: AlertDialog(
+        title: Text('Alert title'),
+        content: Text('Alert Description'),
+        actions: [
+          TextButton(onPressed: (){
+            myCustomMessage('Alert Success', context);
+            Navigator.of(context).pop();
+          }, child: Text('Ok')),
+          TextButton(onPressed: (){
+            Navigator.of(context).pop();
+          }, child: Text('Canceled'))
+        ],
+      ));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Colors.blue,
+      padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+      foregroundColor: Colors.white
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rahat Hossain', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
+        title: Text('Hello World', style: TextStyle(color: Colors.white),),
         toolbarHeight: 70,
+        backgroundColor: Colors.blue,
         actions: [
-          IconButton(
-            onPressed: () {
-              myCustomButton('This is Search', context);
-            },
-            icon: Icon(Icons.search, color: Colors.white),
-          ),
+          IconButton(onPressed: (){myCustomMessage('This is search', context);}, icon: Icon(Icons.search, color: Colors.white,))
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        child: Icon(Icons.add, color: Colors.white,),
+        onPressed: (){
+          myCustomMessage('this is floating button', context);
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.phone), label: 'Contact'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.phone),
+            label: 'Contact'
+          ),
         ],
-        backgroundColor: Colors.blue,
-        fixedColor: Colors.white,
-        onTap: (int index) {
-          if (index == 0) {
-            myCustomButton('This is home button', context);
+        onTap: (int index){
+          if(index == 0){
+            myCustomMessage('This is home', context);
+          }else if(index == 1){
+            myCustomMessage('This is contact', context);
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white),
-        onPressed: () {
-          myCustomButton('This is floating button', context);
-        },
-        backgroundColor: Colors.blue,
       ),
       drawer: Drawer(
         child: ListView(
@@ -68,47 +94,33 @@ class HomeActivity extends StatelessWidget {
             DrawerHeader(
               padding: EdgeInsets.all(0),
               child: UserAccountsDrawerHeader(
-                accountEmail: Text('rahat1470.com@gmail.com'),
-                accountName: Text('Rahat Hossain'),
-                decoration: BoxDecoration(color: Colors.blue),
+                accountEmail: Text('rahat1470.com@gmail.com', style: TextStyle(color: Colors.white),),
+                accountName: Text('Rahat Hossain', style: TextStyle(color: Colors.white),),
+                decoration: BoxDecoration(
+                  color: Colors.blue
+                ),
               ),
             ),
+            ListTile(leading: Icon(Icons.home),title: Text('Home'),onTap: (){
+              myCustomMessage('This is home menu', context);
+            },)
+            
           ],
         ),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.blue
-            ),
-            margin: EdgeInsets.fromLTRB(0,10,0,0),
-            child: Text('Rahat HOssain'),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: (){
+            customAlertDialog(context);
+          }, 
+          child: Text('Click Me'),
+          style: buttonStyle,
           ),
-          Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.blue
-            ),
-            margin: EdgeInsets.fromLTRB(0,10,0,0),
-            child: Text('Rahat HOssain'),
-          ),
-          Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.blue
-            ),
-            margin: EdgeInsets.fromLTRB(0,10,0,0),
-            child: Text('Rahat HOssain'),
-          ),
-        ],
-        spacing: 30,
-      )
+      ),
     );
   }
 }
+
+
+
+

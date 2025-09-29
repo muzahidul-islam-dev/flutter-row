@@ -29,21 +29,29 @@ class HomeActivity extends StatelessWidget{
 
 
   customAlertDialog(context){
-    return showDialog(context: context, builder: (BuildContext context){
-      return Expanded(child: AlertDialog(
-        title: Text('Alert title'),
-        content: Text('Alert Description'),
-        actions: [
-          TextButton(onPressed: (){
-            myCustomMessage('Alert Success', context);
-            Navigator.of(context).pop();
-          }, child: Text('Ok')),
-          TextButton(onPressed: (){
-            Navigator.of(context).pop();
-          }, child: Text('Canceled'))
-        ],
-      ));
-    });
+      return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return Expanded(
+            child: AlertDialog(
+              title: Text('Alert Title'),
+              content: Text('Alert Description'),
+              actions: [
+                TextButton(
+                  onPressed: (){
+                    myCustomMessage('this is custom alert dialog.', context);
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Ok'),
+                ),
+                TextButton(onPressed: (){
+                  Navigator.of(context).pop();
+                }, child: Text('Cancel'))
+              ],
+            ),
+          );
+        }
+      );
   }
 
   @override

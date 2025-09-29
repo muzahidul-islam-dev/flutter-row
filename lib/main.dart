@@ -61,6 +61,12 @@ class HomeActivity extends StatelessWidget{
       padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
       foregroundColor: Colors.white
     );
+
+    ButtonStyle customButtonStyle = ElevatedButton.styleFrom(
+      minimumSize: Size(double.infinity, 60),
+      backgroundColor: Colors.blue,
+      foregroundColor: Colors.white
+    );
     return Scaffold(
       appBar: AppBar(
         title: Text('Hello World', style: TextStyle(color: Colors.white),),
@@ -116,14 +122,21 @@ class HomeActivity extends StatelessWidget{
           ],
         ),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: (){
-            customAlertDialog(context);
-          }, 
-          child: Text('Click Me'),
-          style: buttonStyle,
-          ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(padding: EdgeInsets.all(5), child: TextField(decoration: InputDecoration(label: Text('Enter your name.'),
+          border: OutlineInputBorder()
+          ),)),
+          Padding(padding: EdgeInsets.all(5), child: TextField(decoration: InputDecoration(label: Text('Enter Email Address.'),
+          border: OutlineInputBorder()
+          ),)),
+          Padding(padding: EdgeInsets.all(5), child: TextField(decoration: InputDecoration(label: Text('Enter Password.'),
+          border: OutlineInputBorder()
+          ),)),
+          Padding(padding: EdgeInsets.all(5), child: ElevatedButton(onPressed: (){myCustomMessage('Form Submited', context);}, style: customButtonStyle, child: Text('Submit'),)),
+
+        ],
       ),
     );
   }
